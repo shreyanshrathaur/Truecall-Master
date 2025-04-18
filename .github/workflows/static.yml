@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TruecallerMaster</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
+    <style>
+        :root {
+            --primary: #6e48aa;
+            --secondary: #9d50bb;
+            --dark: #121212;
+            --darker: #0a0a0a;
+            --text: #e0e0e0;
+            --accent: #4776e6;
+            --title-bg: #2ecc71;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: var(--dark);
+            color: var(--text);
+        }
+        .container {
+            background-color: var(--darker);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            border: 1px solid var(--primary);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            background-color: var(--title-bg);
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .search-box {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .country-code-container {
+            position: relative;
+        }
+        .country-code-selector {
+            padding: 12px;
+            background-color: rgba(110, 72, 170, 0.2);
+            border: 1px solid var(--primary);
+            border-radius: 4px 0 0 4px;
+            font-size: 16px;
+            color: var(--text);
+            cursor: pointer;
+            min-width: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .country-code-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 300px;
+            max-height: 300px;
+            overflow-y: auto;
+            background-color: var(--darker);
+            border: 1px solid var(--primary);
+            border-radius: 0 0 5px 5px;
+            z-index: 100;
+            display: none;
+        }
+        .country-code-dropdown.show {
+            display: block;
+        }
+        .country-code-item {
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        .country-code-item:hover {
+            background-color: rgba(110, 72, 170, 0.3);
+        }
+        .country-code-flag {
+            margin-right: 10px;
+            width: 20px;
+        }
+        .country-code-text {
+            flex: 1;
+        }
+        #phoneNumber {
+            flex: 1;
+            padding: 12px;
+            background-color: rgba(255,255,255,0.05);
+            border: 1px solid var(--primary);
+            border-left: none;
+            color: var(--text);
+            border-radius: 0 4px 4px 0;
+            font-size: 16px;
+        }
+        #searchBtn {
+            padding: 12px 20px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-left: 10px;
+            transition: all 0.3s;
+        }
+        #searchBtn:hover {
+            background: linear-gradient(to right, var(--secondary), var(--primary));
+            transform: translateY(-2px);
+        }
+        #searchBtn:disabled {
+            background: #333;
+            cursor: not-allowed;
+            transform: none;
+        }
+        #results {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: rgba(110, 72, 170, 0.1);
+            border: 1px solid var(--primary);
+            min-height: 100px;
+        }
+        .result-item {
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px dashed rgba(110, 72, 170, 0.3);
+        }
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        .result-label {
+            font-weight: bold;
+            color: var(--secondary);
+            display: inline-block;
+            width: 150px;
+        }
+        .result-value {
+            color: var(--text);
+        }
+        .loading {
+            text-align: center;
+            color: var(--secondary);
+        }
+        .error {
+            color: #ff6b6b;
+        }
+        .instructions {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: rgba(71, 118, 230, 0.1);
+            border-radius: 5px;
+            color: var(--accent);
+            font-size: 14px;
+            border: 1px solid var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>TruecallerMaster</h1>
+        
+        <div class="search-box">
+            <div class="country-code-container">
+                <div class="country-code-selector" onclick="toggleCountryCodeDropdown()">
+                    <span id="selected-country-code">+91</span>
+                    <span>▼</span>
+                </div>
+                <div class="country-code-dropdown" id="countryCodeDropdown">
+                    <!-- Country codes will be populated by JavaScript -->
+                </div>
+            </div>
+            <input type="text" id="phoneNumber" placeholder="Enter phone number (e.g. 9876543210)">
+            <button id="searchBtn" onclick="searchNumber()">Search</button>
+        </div>
+        
+        <div id="results">
+            <p>Enter a phone number to check details</p>
+        </div>
+        
+        <div class="instructions">
+            <p><strong>Note:</strong> Default country code is +91 (India). Click on country code to change.</p>
+        </div>
+    </div>
+
+    <script>
+        const phoneInput = document.getElementById('phoneNumber');
+        const searchBtn = document.getElementById('searchBtn');
+        const resultsDiv = document.getElementById('results');
+        const countryCodeDropdown = document.getElementById('countryCodeDropdown');
+        const selectedCountryCode = document.getElementById('selected-country-code');
+        
+        // Country codes with flags
+        const countryCodes = [
+            { code: '+1', name: 'USA', flag: 'us' },
+            { code: '+91', name: 'India', flag: 'in' },
+            { code: '+44', name: 'UK', flag: 'gb' },
+            { code: '+86', name: 'China', flag: 'cn' },
+            { code: '+33', name: 'France', flag: 'fr' },
+            { code: '+49', name: 'Germany', flag: 'de' },
+            { code: '+81', name: 'Japan', flag: 'jp' },
+            { code: '+7', name: 'Russia', flag: 'ru' },
+            { code: '+971', name: 'UAE', flag: 'ae' },
+            { code: '+966', name: 'Saudi Arabia', flag: 'sa' },
+            { code: '+92', name: 'Pakistan', flag: 'pk' },
+            { code: '+880', name: 'Bangladesh', flag: 'bd' },
+            { code: '+94', name: 'Sri Lanka', flag: 'lk' },
+            { code: '+65', name: 'Singapore', flag: 'sg' },
+            { code: '+60', name: 'Malaysia', flag: 'my' },
+            { code: '+63', name: 'Philippines', flag: 'ph' },
+            { code: '+62', name: 'Indonesia', flag: 'id' },
+            { code: '+84', name: 'Vietnam', flag: 'vn' },
+            { code: '+90', name: 'Turkey', flag: 'tr' },
+            { code: '+20', name: 'Egypt', flag: 'eg' }
+        ];
+
+        // Populate country code dropdown
+        function populateCountryCodes() {
+            countryCodeDropdown.innerHTML = '';
+            countryCodes.forEach(country => {
+                const item = document.createElement('div');
+                item.className = 'country-code-item';
+                item.innerHTML = `
+                    <span class="flag-icon flag-icon-${country.flag} country-code-flag"></span>
+                    <span class="country-code-text">${country.name} (${country.code})</span>
+                `;
+                item.addEventListener('click', () => {
+                    selectedCountryCode.textContent = country.code;
+                    toggleCountryCodeDropdown();
+                });
+                countryCodeDropdown.appendChild(item);
+            });
+        }
+
+        // Toggle country code dropdown
+        function toggleCountryCodeDropdown() {
+            countryCodeDropdown.classList.toggle('show');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.country-code-container')) {
+                countryCodeDropdown.classList.remove('show');
+            }
+        });
+
+        // Initialize country codes
+        populateCountryCodes();
+
+        // Allow pressing Enter key to search
+        phoneInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchNumber();
+            }
+        });
+        
+        async function searchNumber() {
+            let phoneNumber = phoneInput.value.trim();
+            const countryCode = selectedCountryCode.textContent;
+            
+            if (!phoneNumber) {
+                showError('Please enter a phone number');
+                return;
+            }
+            
+            // Combine country code and phone number
+            phoneNumber = countryCode + phoneNumber;
+            
+            // Phone number validation
+            if (!/^\+[0-9]{10,15}$/.test(phoneNumber)) {
+                showError('Please enter a valid phone number (e.g. 9876543210 with country code)');
+                return;
+            }
+            
+            // Disable button during search
+            searchBtn.disabled = true;
+            resultsDiv.innerHTML = '<div class="loading">🔍 Searching... Please wait</div>';
+            
+            try {
+                const apiUrl = `https://true-call-check.vercel.app/api/truecaller?q=${encodeURIComponent(phoneNumber)}`;
+                const response = await fetch(apiUrl);
+                
+                if (!response.ok) {
+                    throw new Error(`API request failed with status ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.error || !data.is_possible) {
+                    showError(data.message || 'No details found for this number');
+                } else {
+                    // Modify the data before displaying
+                    const modifiedData = {
+                        ...data,
+                        Telegram: "@oceanSoul_77",
+                        developer: "SR"
+                    };
+                    showResults(modifiedData, phoneNumber);
+                }
+            } catch (error) {
+                showError(error.message || 'An error occurred while fetching data');
+            } finally {
+                searchBtn.disabled = false;
+            }
+        }
+        
+        function showResults(data, phoneNumber) {
+            let html = `
+                <h3 style="color: var(--secondary); margin-top: 0;">📱 Results for ${data.international_format || phoneNumber}</h3>
+                <div class="result-item">
+                    <span class="result-label">Carrier:</span>
+                    <span class="result-value">${data.carrier || 'Unknown'}</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Location:</span>
+                    <span class="result-value">${data.location || data.country || 'Unknown'}</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Time Zone:</span>
+                    <span class="result-value">${data.timezones?.[0] || 'Unknown'}</span>
+                </div>
+            `;
+            
+            // Show name from either Truecaller or Unknown field
+            const name = data.Truecaller !== "No name found" ? data.Truecaller : data.Unknown;
+            if (name) {
+                html += `
+                    <div class="result-item">
+                        <span class="result-label">Name:</span>
+                        <span class="result-value">${name}</span>
+                    </div>
+                `;
+            }
+            
+            // Show Telegram if available (using modified value)
+            if (data.Telegram) {
+                html += `
+                    <div class="result-item">
+                        <span class="result-label">Telegram:</span>
+                        <span class="result-value">${data.Telegram}</span>
+                    </div>
+                `;
+            }
+            
+            // Show developer credit (using modified value)
+            if (data.developer) {
+                html += `
+                    <div class="result-item">
+                        <span class="result-label">Developer:</span>
+                        <span class="result-value">${data.developer}</span>
+                    </div>
+                `;
+            }
+            
+            // Show timestamp
+            if (data.timestamp) {
+                const date = new Date(data.timestamp);
+                html += `
+                    <div class="result-item" style="margin-top: 20px;">
+                        <span class="result-label">Last Updated:</span>
+                        <span class="result-value">${date.toLocaleString()}</span>
+                    </div>
+                `;
+            }
+            
+            resultsDiv.innerHTML = html;
+        }
+        
+        function showError(message) {
+            resultsDiv.innerHTML = `<div class="error">❌ ${message}</div>`;
+        }
+    </script>
+</body>
+</html>
