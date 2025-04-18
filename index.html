@@ -18,6 +18,7 @@
             --success: #2ecc71;
             --error: #ff6b6b;
             --whatsapp: #25D366;
+            --telegram: #0088cc;
         }
         
         [data-theme="light"] {
@@ -31,6 +32,7 @@
             --success: #2ecc71;
             --error: #ff6b6b;
             --whatsapp: #25D366;
+            --telegram: #0088cc;
         }
 
         * {
@@ -288,15 +290,31 @@
             border-radius: 5px;
             text-decoration: none;
             font-weight: 500;
-            margin-top: 15px;
             transition: all 0.3s ease;
+            flex: 1;
+        }
+        .telegram-btn {
+            display: inline-block;
+            background-color: var(--telegram);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            flex: 1;
         }
         .whatsapp-btn:hover {
             background-color: #128C7E;
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
-        .whatsapp-btn i {
+        .telegram-btn:hover {
+            background-color: #0077B5;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .whatsapp-btn i, .telegram-btn i {
             margin-right: 5px;
         }
         .action-buttons {
@@ -496,6 +514,8 @@
             const cleanNumber = phoneNumber.replace(/\D/g, '');
             // Create WhatsApp link
             const whatsappLink = `https://wa.me/${cleanNumber}`;
+            // Create Telegram link
+            const telegramLink = `https://t.me/+${cleanNumber}`;
             
             let html = `
                 <h3 style="color: var(--secondary); margin-top: 0; margin-bottom: 20px;">📱 Results for ${data.international_format || phoneNumber}</h3>
@@ -535,11 +555,14 @@
                 `;
             }
             
-            // Add WhatsApp button
+            // Add WhatsApp and Telegram buttons
             html += `
                 <div class="action-buttons">
                     <a href="${whatsappLink}" class="whatsapp-btn" target="_blank">
-                        <i class="fab fa-whatsapp"></i> Message on WhatsApp
+                        <i class="fab fa-whatsapp"></i> WhatsApp
+                    </a>
+                    <a href="${telegramLink}" class="telegram-btn" target="_blank">
+                        <i class="fab fa-telegram"></i> Telegram
                     </a>
                 </div>
             `;
