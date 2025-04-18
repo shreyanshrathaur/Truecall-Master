@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TruecallerMaster</title>
+    <title>TRUECALL MASTER</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #6e48aa;
@@ -13,162 +14,287 @@
             --darker: #0a0a0a;
             --text: #e0e0e0;
             --accent: #4776e6;
-            --title-bg: #2ecc71;
+            --title-bg: linear-gradient(135deg, #6e48aa 0%, #9d50bb 100%);
+            --success: #2ecc71;
+            --error: #ff6b6b;
+        }
+        
+        [data-theme="light"] {
+            --primary: #6e48aa;
+            --secondary: #9d50bb;
+            --dark: #f5f5f5;
+            --darker: #ffffff;
+            --text: #333333;
+            --accent: #4776e6;
+            --title-bg: linear-gradient(135deg, #6e48aa 0%, #9d50bb 100%);
+            --success: #2ecc71;
+            --error: #ff6b6b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
             background-color: var(--dark);
             color: var(--text);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
         }
         .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
             background-color: var(--darker);
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            border: 1px solid var(--primary);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid rgba(110, 72, 170, 0.3);
+            transition: background-color 0.3s, border-color 0.3s;
         }
         h1 {
             text-align: center;
-            margin-bottom: 30px;
-            background-color: var(--title-bg);
+            margin-bottom: 25px;
+            background: var(--title-bg);
             color: white;
             padding: 15px;
-            border-radius: 5px;
-            font-weight: bold;
-            text-transform: uppercase;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.8rem;
             letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
         .search-box {
             display: flex;
+            flex-direction: column;
+            gap: 15px;
             margin-bottom: 20px;
+        }
+        @media (min-width: 480px) {
+            .search-box {
+                flex-direction: row;
+            }
         }
         .country-code-container {
             position: relative;
+            min-width: 120px;
         }
         .country-code-selector {
-            padding: 12px;
+            padding: 12px 15px;
             background-color: rgba(110, 72, 170, 0.2);
             border: 1px solid var(--primary);
-            border-radius: 4px 0 0 4px;
+            border-radius: 8px;
             font-size: 16px;
             color: var(--text);
             cursor: pointer;
-            min-width: 80px;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+        .country-code-selector:hover {
+            background-color: rgba(110, 72, 170, 0.3);
         }
         .country-code-dropdown {
             position: absolute;
             top: 100%;
             left: 0;
-            width: 300px;
+            width: 100%;
             max-height: 300px;
             overflow-y: auto;
             background-color: var(--darker);
             border: 1px solid var(--primary);
-            border-radius: 0 0 5px 5px;
+            border-radius: 8px;
             z-index: 100;
             display: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: background-color 0.3s, border-color 0.3s;
         }
         .country-code-dropdown.show {
             display: block;
+            margin-top: 5px;
         }
         .country-code-item {
-            padding: 8px 12px;
+            padding: 10px 15px;
             display: flex;
             align-items: center;
             cursor: pointer;
+            transition: background-color 0.2s;
         }
         .country-code-item:hover {
             background-color: rgba(110, 72, 170, 0.3);
         }
         .country-code-flag {
-            margin-right: 10px;
+            margin-right: 12px;
             width: 20px;
+            border-radius: 2px;
         }
         .country-code-text {
             flex: 1;
+            font-size: 14px;
+        }
+        .input-group {
+            display: flex;
+            flex: 1;
+            gap: 10px;
         }
         #phoneNumber {
             flex: 1;
-            padding: 12px;
+            padding: 12px 15px;
             background-color: rgba(255,255,255,0.05);
             border: 1px solid var(--primary);
-            border-left: none;
             color: var(--text);
-            border-radius: 0 4px 4px 0;
+            border-radius: 8px;
             font-size: 16px;
+            transition: border-color 0.3s, background-color 0.3s;
+        }
+        #phoneNumber:focus {
+            outline: none;
+            border-color: var(--secondary);
         }
         #searchBtn {
-            padding: 12px 20px;
+            padding: 12px 25px;
             background: linear-gradient(to right, var(--primary), var(--secondary));
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 16px;
-            margin-left: 10px;
-            transition: all 0.3s;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            white-space: nowrap;
         }
         #searchBtn:hover {
             background: linear-gradient(to right, var(--secondary), var(--primary));
             transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
         #searchBtn:disabled {
             background: #333;
             cursor: not-allowed;
             transform: none;
+            box-shadow: none;
         }
         #results {
             margin-top: 20px;
             padding: 20px;
-            border-radius: 5px;
+            border-radius: 10px;
             background-color: rgba(110, 72, 170, 0.1);
             border: 1px solid var(--primary);
-            min-height: 100px;
+            min-height: 150px;
+            transition: background-color 0.3s, border-color 0.3s;
         }
         .result-item {
-            margin-bottom: 12px;
-            padding-bottom: 12px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
             border-bottom: 1px dashed rgba(110, 72, 170, 0.3);
+            display: flex;
+            flex-wrap: wrap;
         }
         .result-item:last-child {
             border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
         }
         .result-label {
-            font-weight: bold;
+            font-weight: 600;
             color: var(--secondary);
-            display: inline-block;
-            width: 150px;
+            width: 120px;
+            margin-bottom: 5px;
         }
         .result-value {
             color: var(--text);
+            flex: 1;
+            min-width: 200px;
+            word-break: break-word;
         }
         .loading {
             text-align: center;
             color: var(--secondary);
+            padding: 20px;
+            font-size: 18px;
+        }
+        .loading:after {
+            content: '...';
+            animation: dots 1.5s steps(5, end) infinite;
+        }
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
         }
         .error {
-            color: #ff6b6b;
+            color: var(--error);
+            padding: 15px;
+            text-align: center;
+            font-weight: 500;
+            border-radius: 8px;
+            background-color: rgba(255, 107, 107, 0.1);
+            border: 1px solid var(--error);
         }
         .instructions {
-            margin-top: 30px;
+            margin-top: 25px;
             padding: 15px;
             background-color: rgba(71, 118, 230, 0.1);
-            border-radius: 5px;
+            border-radius: 10px;
             color: var(--accent);
             font-size: 14px;
             border: 1px solid var(--accent);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 15px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.5);
+        }
+        .theme-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        .theme-toggle {
+            background: rgba(110, 72, 170, 0.2);
+            border: 1px solid var(--primary);
+            color: var(--text);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .theme-toggle:hover {
+            background: rgba(110, 72, 170, 0.3);
+            transform: scale(1.1);
+        }
+        @media (max-width: 480px) {
+            .theme-switcher {
+                top: 10px;
+                right: 10px;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="theme-switcher">
+        <div class="theme-toggle" id="themeToggle">
+            <span id="themeIcon">🌙</span>
+        </div>
+    </div>
+
     <div class="container">
-        <h1>Truecaller Master</h1>
+        <h1>TRUECALL MASTER</h1>
         
         <div class="search-box">
             <div class="country-code-container">
@@ -180,17 +306,23 @@
                     <!-- Country codes will be populated by JavaScript -->
                 </div>
             </div>
-            <input type="text" id="phoneNumber" placeholder="Enter phone number (e.g. 9876543210)">
-            <button id="searchBtn" onclick="searchNumber()">Search</button>
+            <div class="input-group">
+                <input type="text" id="phoneNumber" placeholder="Enter phone number (e.g. 9876543210)">
+                <button id="searchBtn" onclick="searchNumber()">Search</button>
+            </div>
         </div>
         
         <div id="results">
-            <p>Enter a phone number to check details</p>
+            <p style="text-align: center; color: var(--text); opacity: 0.7;">Enter a phone number to check details</p>
         </div>
         
         <div class="instructions">
             <p><strong>Note:</strong> Default country code is +91 (India). Click on country code to change.</p>
         </div>
+    </div>
+
+    <div class="footer">
+        <p>© 2023 TRUECALL MASTER | All Rights Reserved</p>
     </div>
 
     <script>
@@ -199,7 +331,28 @@
         const resultsDiv = document.getElementById('results');
         const countryCodeDropdown = document.getElementById('countryCodeDropdown');
         const selectedCountryCode = document.getElementById('selected-country-code');
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
         
+        // Check for saved theme preference or use preferred color scheme
+        const currentTheme = localStorage.getItem('theme') || 
+                            (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        updateThemeIcon(currentTheme);
+
+        // Theme toggle functionality
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+
+        function updateThemeIcon(theme) {
+            themeIcon.textContent = theme === 'dark' ? '🌙' : '☀️';
+        }
+
         // Country codes with flags
         const countryCodes = [
             { code: '+1', name: 'USA', flag: 'us' },
@@ -284,7 +437,7 @@
             
             // Disable button during search
             searchBtn.disabled = true;
-            resultsDiv.innerHTML = '<div class="loading">🔍 Searching... Please wait</div>';
+            resultsDiv.innerHTML = '<div class="loading">🔍 Searching</div>';
             
             try {
                 const apiUrl = `https://true-call-check.vercel.app/api/truecaller?q=${encodeURIComponent(phoneNumber)}`;
@@ -299,13 +452,7 @@
                 if (data.error || !data.is_possible) {
                     showError(data.message || 'No details found for this number');
                 } else {
-                    // Modify the data before displaying
-                    const modifiedData = {
-                        ...data,
-                        Telegram: "@oceanSoul_77",
-                        developer: "SR"
-                    };
-                    showResults(modifiedData, phoneNumber);
+                    showResults(data, phoneNumber);
                 }
             } catch (error) {
                 showError(error.message || 'An error occurred while fetching data');
@@ -316,7 +463,7 @@
         
         function showResults(data, phoneNumber) {
             let html = `
-                <h3 style="color: var(--secondary); margin-top: 0;">📱 Results for ${data.international_format || phoneNumber}</h3>
+                <h3 style="color: var(--secondary); margin-top: 0; margin-bottom: 20px;">📱 Results for ${data.international_format || phoneNumber}</h3>
                 <div class="result-item">
                     <span class="result-label">Carrier:</span>
                     <span class="result-value">${data.carrier || 'Unknown'}</span>
@@ -338,26 +485,6 @@
                     <div class="result-item">
                         <span class="result-label">Name:</span>
                         <span class="result-value">${name}</span>
-                    </div>
-                `;
-            }
-            
-            // Show Telegram if available (using modified value)
-            if (data.Telegram) {
-                html += `
-                    <div class="result-item">
-                        <span class="result-label">Telegram:</span>
-                        <span class="result-value">${data.Telegram}</span>
-                    </div>
-                `;
-            }
-            
-            // Show developer credit (using modified value)
-            if (data.developer) {
-                html += `
-                    <div class="result-item">
-                        <span class="result-label">Developer:</span>
-                        <span class="result-value">${data.developer}</span>
                     </div>
                 `;
             }
