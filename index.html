@@ -17,6 +17,7 @@
             --title-bg: linear-gradient(135deg, #6e48aa 0%, #9d50bb 100%);
             --success: #2ecc71;
             --error: #ff6b6b;
+            --whatsapp: #25D366;
         }
         
         [data-theme="light"] {
@@ -29,6 +30,7 @@
             --title-bg: linear-gradient(135deg, #6e48aa 0%, #9d50bb 100%);
             --success: #2ecc71;
             --error: #ff6b6b;
+            --whatsapp: #25D366;
         }
 
         * {
@@ -278,13 +280,41 @@
             background: rgba(110, 72, 170, 0.3);
             transform: scale(1.1);
         }
+        .whatsapp-btn {
+            display: inline-block;
+            background-color: var(--whatsapp);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+        .whatsapp-btn:hover {
+            background-color: #128C7E;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .whatsapp-btn i {
+            margin-right: 5px;
+        }
+        .action-buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
         @media (max-width: 480px) {
             .theme-switcher {
                 top: 10px;
                 right: 10px;
             }
+            .action-buttons {
+                flex-direction: column;
+            }
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="theme-switcher">
@@ -462,6 +492,11 @@
         }
         
         function showResults(data, phoneNumber) {
+            // Extract just the digits from the phone number
+            const cleanNumber = phoneNumber.replace(/\D/g, '');
+            // Create WhatsApp link
+            const whatsappLink = `https://wa.me/${cleanNumber}`;
+            
             let html = `
                 <h3 style="color: var(--secondary); margin-top: 0; margin-bottom: 20px;">📱 Results for ${data.international_format || phoneNumber}</h3>
                 <div class="result-item">
@@ -499,6 +534,15 @@
                     </div>
                 `;
             }
+            
+            // Add WhatsApp button
+            html += `
+                <div class="action-buttons">
+                    <a href="${whatsappLink}" class="whatsapp-btn" target="_blank">
+                        <i class="fab fa-whatsapp"></i> Message on WhatsApp
+                    </a>
+                </div>
+            `;
             
             resultsDiv.innerHTML = html;
         }
