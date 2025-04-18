@@ -1,6 +1,6 @@
-# TruecallerMaster 📞
+# Truecall-Master 📞
 
-A web tool to check phone number details using the Truecaller API.  
+A web tool to check phone number details using the Truecall API.  
 
 
 ## Features ✨
