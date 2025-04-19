@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>TRUECALL MASTER</title>
     <link rel="icon" href="https://cdn-icons-png.freepik.com/512/15659/15659390.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
@@ -51,36 +51,38 @@
             color: var(--text);
             line-height: 1.6;
             transition: background-color 0.3s, color 0.3s;
+            padding: 0;
+            margin: 0;
         }
         .container {
             width: 100%;
             max-width: 600px;
-            margin: 20px auto;
-            padding: 20px;
+            margin: 15px auto;
+            padding: 15px;
             background-color: var(--darker);
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             border: 1px solid rgba(110, 72, 170, 0.3);
             transition: background-color 0.3s, border-color 0.3s;
         }
         h1 {
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             background: var(--title-bg);
             color: white;
-            padding: 15px;
+            padding: 12px;
             border-radius: 8px;
             font-weight: 700;
-            font-size: 1.8rem;
-            letter-spacing: 1px;
+            font-size: 1.5rem;
+            letter-spacing: 0.5px;
             text-shadow: 0 2px 4px rgba(0,0,0,0.2);
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
         .search-box {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            margin-bottom: 20px;
+            gap: 12px;
+            margin-bottom: 15px;
         }
         @media (min-width: 480px) {
             .search-box {
@@ -92,11 +94,11 @@
             min-width: 120px;
         }
         .country-code-selector {
-            padding: 12px 15px;
+            padding: 10px 12px;
             background-color: rgba(110, 72, 170, 0.2);
             border: 1px solid var(--primary);
             border-radius: 8px;
-            font-size: 16px;
+            font-size: 15px;
             color: var(--text);
             cursor: pointer;
             display: flex;
@@ -127,7 +129,7 @@
             margin-top: 5px;
         }
         .country-code-item {
-            padding: 10px 15px;
+            padding: 8px 12px;
             display: flex;
             align-items: center;
             cursor: pointer;
@@ -137,44 +139,57 @@
             background-color: rgba(110, 72, 170, 0.3);
         }
         .country-code-flag {
-            margin-right: 12px;
-            width: 20px;
+            margin-right: 10px;
+            width: 18px;
             border-radius: 2px;
         }
         .country-code-text {
             flex: 1;
-            font-size: 14px;
+            font-size: 13px;
         }
         .input-group {
             display: flex;
             flex: 1;
-            gap: 10px;
+            gap: 8px;
+            flex-direction: column;
+        }
+        @media (min-width: 480px) {
+            .input-group {
+                flex-direction: row;
+            }
         }
         #phoneNumber {
             flex: 1;
-            padding: 12px 15px;
+            padding: 10px 12px;
             background-color: rgba(255,255,255,0.05);
             border: 1px solid var(--primary);
             color: var(--text);
             border-radius: 8px;
-            font-size: 16px;
+            font-size: 15px;
             transition: border-color 0.3s, background-color 0.3s;
+            width: 100%;
         }
         #phoneNumber:focus {
             outline: none;
             border-color: var(--secondary);
         }
         #searchBtn {
-            padding: 12px 25px;
+            padding: 10px 20px;
             background: linear-gradient(to right, var(--primary), var(--secondary));
             color: white;
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 500;
             transition: all 0.3s ease;
             white-space: nowrap;
+            width: 100%;
+        }
+        @media (min-width: 480px) {
+            #searchBtn {
+                width: auto;
+            }
         }
         #searchBtn:hover {
             background: linear-gradient(to right, var(--secondary), var(--primary));
@@ -188,17 +203,17 @@
             box-shadow: none;
         }
         #results {
-            margin-top: 20px;
-            padding: 20px;
-            border-radius: 10px;
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
             background-color: rgba(110, 72, 170, 0.1);
             border: 1px solid var(--primary);
-            min-height: 150px;
+            min-height: 120px;
             transition: background-color 0.3s, border-color 0.3s;
         }
         .result-item {
-            margin-bottom: 15px;
-            padding-bottom: 15px;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
             border-bottom: 1px dashed rgba(110, 72, 170, 0.3);
             display: flex;
             flex-wrap: wrap;
@@ -211,20 +226,27 @@
         .result-label {
             font-weight: 600;
             color: var(--secondary);
-            width: 120px;
+            width: 100px;
             margin-bottom: 5px;
+            font-size: 14px;
+        }
+        @media (min-width: 400px) {
+            .result-label {
+                width: 120px;
+            }
         }
         .result-value {
             color: var(--text);
             flex: 1;
-            min-width: 200px;
+            min-width: 150px;
             word-break: break-word;
+            font-size: 14px;
         }
         .loading {
             text-align: center;
             color: var(--secondary);
-            padding: 20px;
-            font-size: 18px;
+            padding: 15px;
+            font-size: 16px;
         }
         .loading:after {
             content: '...';
@@ -237,34 +259,35 @@
         }
         .error {
             color: var(--error);
-            padding: 15px;
+            padding: 12px;
             text-align: center;
             font-weight: 500;
             border-radius: 8px;
             background-color: rgba(255, 107, 107, 0.1);
             border: 1px solid var(--error);
+            font-size: 14px;
         }
         .instructions {
-            margin-top: 25px;
-            padding: 15px;
+            margin-top: 20px;
+            padding: 12px;
             background-color: rgba(71, 118, 230, 0.1);
-            border-radius: 10px;
+            border-radius: 8px;
             color: var(--accent);
-            font-size: 14px;
+            font-size: 13px;
             border: 1px solid var(--accent);
             transition: background-color 0.3s, border-color 0.3s;
         }
         .footer {
             text-align: center;
-            margin-top: 30px;
-            padding: 15px;
+            margin-top: 20px;
+            padding: 12px;
             font-size: 12px;
             color: rgba(255,255,255,0.5);
         }
         .theme-switcher {
             position: fixed;
-            top: 20px;
-            right: 20px;
+            top: 15px;
+            right: 15px;
             z-index: 1000;
         }
         .theme-toggle {
@@ -272,13 +295,14 @@
             border: 1px solid var(--primary);
             color: var(--text);
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: all 0.3s ease;
+            font-size: 16px;
         }
         .theme-toggle:hover {
             background: rgba(110, 72, 170, 0.3);
@@ -288,23 +312,27 @@
             display: inline-block;
             background-color: var(--whatsapp);
             color: white;
-            padding: 8px 15px;
+            padding: 8px 12px;
             border-radius: 5px;
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s ease;
             flex: 1;
+            text-align: center;
+            font-size: 14px;
         }
         .telegram-btn {
             display: inline-block;
             background-color: var(--telegram);
             color: white;
-            padding: 8px 15px;
+            padding: 8px 12px;
             border-radius: 5px;
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s ease;
             flex: 1;
+            text-align: center;
+            font-size: 14px;
         }
         .whatsapp-btn:hover {
             background-color: #128C7E;
@@ -320,17 +348,51 @@
             margin-right: 5px;
         }
         .action-buttons {
-            margin-top: 20px;
+            margin-top: 15px;
             display: flex;
-            gap: 10px;
+            gap: 8px;
+            flex-direction: column;
+        }
+        @media (min-width: 400px) {
+            .action-buttons {
+                flex-direction: row;
+            }
+        }
+        #countrySearch {
+            width: 90%;
+            margin: 8px auto;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid var(--primary);
+            display: block;
+            background-color: var(--dark);
+            color: var(--text);
+            font-size: 14px;
         }
         @media (max-width: 480px) {
             .theme-switcher {
                 top: 10px;
                 right: 10px;
             }
-            .action-buttons {
-                flex-direction: column;
+            .container {
+                margin: 10px auto;
+                padding: 12px;
+            }
+            h1 {
+                font-size: 1.3rem;
+                padding: 10px;
+            }
+        }
+        @media (max-width: 350px) {
+            .country-code-text {
+                font-size: 12px;
+            }
+            .country-code-selector {
+                padding: 8px 10px;
+                font-size: 14px;
+            }
+            #phoneNumber, #searchBtn {
+                font-size: 14px;
             }
         }
     </style>
@@ -344,7 +406,7 @@
     </div>
 
     <div class="container">
-        <h1>TRUECALL MASTER @SR </h1>
+        <h1>TRUECALL MASTER @SR</h1>
         
         <div class="search-box">
             <div class="country-code-container">
@@ -353,6 +415,7 @@
                     <span>▼</span>
                 </div>
                 <div class="country-code-dropdown" id="countryCodeDropdown">
+                  <input type="text" id="countrySearch" placeholder="Search country...">
                     <!-- Country codes will be populated by JavaScript -->
                 </div>
             </div>
@@ -363,7 +426,7 @@
         </div>
         
         <div id="results">
-            <p style="text-align: center; color: var(--text); opacity: 0.7;">Enter a phone number to check details</p>
+            <p style="text-align: center; color: var(--text); opacity: 0.7; font-size: 14px;">Enter a phone number to check details</p>
         </div>
         
         <div class="instructions">
@@ -383,7 +446,29 @@
         const selectedCountryCode = document.getElementById('selected-country-code');
         const themeToggle = document.getElementById('themeToggle');
         const themeIcon = document.getElementById('themeIcon');
-        
+        const countrySearch = document.getElementById('countrySearch');
+
+        // Loading spinner
+        const loadingSpinner = `
+          <div class="loading">
+            <i class="fas fa-spinner fa-spin"></i> Searching
+          </div>`;
+
+        // Search input validation
+        phoneInput.addEventListener('input', () => {
+          const value = phoneInput.value.trim();
+          const isValid = /^[0-9]{6,15}$/.test(value);
+          phoneInput.style.borderColor = isValid ? 'var(--success)' : 'var(--error)';
+        });
+
+        // Country filter functionality
+        countrySearch.addEventListener('input', () => {
+          const filter = countrySearch.value.toLowerCase();
+          document.querySelectorAll('.country-code-item').forEach(item => {
+            item.style.display = item.textContent.toLowerCase().includes(filter) ? '' : 'none';
+          });
+        });
+
         // Check for saved theme preference or use preferred color scheme
         const currentTheme = localStorage.getItem('theme') || 
                             (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
@@ -448,6 +533,9 @@
         // Toggle country code dropdown
         function toggleCountryCodeDropdown() {
             countryCodeDropdown.classList.toggle('show');
+            if (countryCodeDropdown.classList.contains('show')) {
+                countrySearch.focus();
+            }
         }
 
         // Close dropdown when clicking outside
@@ -527,7 +615,7 @@
             const telegramLink = `https://t.me/+${cleanNumber}`;
             
             let html = `
-                <h3 style="color: var(--secondary); margin-top: 0; margin-bottom: 20px;">📱 Results for ${data.international_format || phoneNumber}</h3>
+                <h3 style="color: var(--secondary); margin-top: 0; margin-bottom: 15px; font-size: 1.2rem;">📱 Results for ${data.international_format || phoneNumber}</h3>
                 <div class="result-item">
                     <span class="result-label">Carrier:</span>
                     <span class="result-value">${data.carrier || 'Unknown'}</span>
@@ -557,7 +645,7 @@
             if (data.timestamp) {
                 const date = new Date(data.timestamp);
                 html += `
-                    <div class="result-item" style="margin-top: 20px;">
+                    <div class="result-item" style="margin-top: 15px;">
                         <span class="result-label">Last Updated:</span>
                         <span class="result-value">${date.toLocaleString()}</span>
                     </div>
@@ -580,7 +668,7 @@
         }
         
         function showError(message) {
-            resultsDiv.innerHTML = `<div class="error">❌ ${message}</div>`;
+            resultsDiv.innerHTML = `<div class="error">❌ ${message} <br><button onclick="searchNumber()" style="margin-top:10px;padding:6px 12px;border:none;background-color:var(--primary);color:white;border-radius:5px;cursor:pointer;font-size:13px;">Retry</button></div>`;
         }
     </script>
 </body>
