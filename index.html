@@ -7,6 +7,7 @@
     <link rel="icon" href="https://cdn-icons-png.freepik.com/512/15659/15659390.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         :root {
             --primary: #6e48aa;
@@ -511,6 +512,13 @@
         }
         
         function showResults(data, phoneNumber) {
+            // Trigger confetti animation
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+
             // Extract just the digits from the phone number
             const cleanNumber = phoneNumber.replace(/\D/g, '');
             // Create WhatsApp link
