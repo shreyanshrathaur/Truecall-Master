@@ -2,6 +2,8 @@
 
 A web tool to check phone number details using the Truecall API.  
 
+TRY IT : https://shreyanshrathaur.github.io/Truecall-Master/
+
 
 ## Features ✨
 - Search phone numbers with country codes
