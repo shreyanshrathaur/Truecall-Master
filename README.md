@@ -19,7 +19,7 @@ TRY IT : https://shreyanshrathaur.github.io/Truecall-Master/
 ## Technologies Used 💻
 - HTML, CSS, JavaScript
 - [Flag Icons](https://github.com/lipis/flag-icons) for country flags
-- Truecaller API
+- Truecall API
 
 ## Note ⚠️
 This tool uses a third-party API. Results may vary based on availability.
