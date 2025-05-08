@@ -1116,6 +1116,7 @@
                     showError(data.message || 'No details found for this number');
                 } else {
                     showResults(data, phoneNumber);
+            fetchWhatsappProfilePic(phoneNumber);
                     addToSearchHistory(phoneNumber, data);
                 }
             } catch (error) {
@@ -1367,6 +1368,39 @@
         }
 
         // Initialize history panel and auto-format on page load
+        
+        async function fetchWhatsappProfilePic(phoneNumber) {
+            const url = `https://whatsapp-profile-pic.p.rapidapi.com/wspic/png?phone=${phoneNumber.replace('+', '')}`;
+
+            const options = {
+                method: 'GET',
+                headers: {
+                    'X-Rapidapi-Key': '9c340d5c61msha0d7ccab2e44a26p1ab8e4jsn5f4c909aaa0e',
+                    'X-Rapidapi-Host': 'whatsapp-profile-pic.p.rapidapi.com'
+                }
+            };
+
+            try {
+                const response = await fetch(url, options);
+                if (!response.ok) throw new Error('Failed to fetch profile picture');
+
+                const blob = await response.blob();
+                const imageUrl = URL.createObjectURL(blob);
+
+                const img = document.createElement('img');
+                img.src = imageUrl;
+                img.alt = "WhatsApp Profile Pic";
+                img.style.maxWidth = '120px';
+                img.style.borderRadius = '12px';
+                img.style.marginTop = '15px';
+                img.style.boxShadow = '0 4px 8px rgba(0,0,0,0.2)';
+
+                resultsDiv.appendChild(img);
+            } catch (err) {
+                console.warn('No WhatsApp pic found or error occurred:', err.message);
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             renderSearchHistory();
             
